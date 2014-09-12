@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <resources>
 
     <string name="app_name">Halo</string>
@@ -43,6 +42,8 @@
     <string name="navigation_drawer_open">Drawer Open</string>
     <string name="navigation_drawer_close">Drawer Close</string>
     <string name="title_home">Home</string>
-
+    <string name="title_activity_home_page">HomePage</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
 
 </resources>

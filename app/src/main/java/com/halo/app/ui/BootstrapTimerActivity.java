@@ -28,7 +28,7 @@ import butterknife.InjectView;
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
 
-public class BootstrapTimerActivity extends BootstrapFragmentActivity implements View.OnClickListener {
+public class BootstrapTimerActivity extends BaseActivity implements View.OnClickListener {
 
     @Inject Bus eventBus;
 

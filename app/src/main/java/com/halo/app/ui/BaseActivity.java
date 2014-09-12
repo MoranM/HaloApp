@@ -14,7 +14,7 @@ import butterknife.Views;
 /**
  * Base class for all Bootstrap Activities that need fragments.
  */
-public class BootstrapFragmentActivity extends ActionBarActivity {
+public class BaseActivity extends ActionBarActivity {
 
     @Inject
     protected Bus eventBus;

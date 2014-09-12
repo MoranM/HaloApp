@@ -33,7 +33,7 @@ import butterknife.Views;
  * If you need to remove the authentication from the application please see
  * {@link com.halo.app.authenticator.ApiKeyProvider#getAuthKey(android.app.Activity)}
  */
-public class MainActivity extends BootstrapFragmentActivity {
+public class MainActivity extends BaseActivity {
 
     @Inject protected BootstrapServiceProvider serviceProvider;
 

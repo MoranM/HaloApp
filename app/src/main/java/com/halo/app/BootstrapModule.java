@@ -13,8 +13,10 @@ import com.halo.app.core.RestAdapterRequestInterceptor;
 import com.halo.app.core.RestErrorHandler;
 import com.halo.app.core.TimerService;
 import com.halo.app.core.UserAgentProvider;
+import com.halo.app.core.api.GetAllStoriesApiCallExecuter;
 import com.halo.app.ui.BootstrapTimerActivity;
 import com.halo.app.ui.CheckInsListFragment;
+import com.halo.app.ui.HomePageActivity;
 import com.halo.app.ui.MainActivity;
 import com.halo.app.ui.NavigationDrawerFragment;
 import com.halo.app.ui.NewsActivity;
@@ -50,7 +52,9 @@ import retrofit.converter.GsonConverter;
                 NewsListFragment.class,
                 UserActivity.class,
                 UserListFragment.class,
-                TimerService.class
+                TimerService.class,
+                GetAllStoriesApiCallExecuter.class,
+                HomePageActivity.class
         }
 )
 public class BootstrapModule {
