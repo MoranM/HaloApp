@@ -55,7 +55,7 @@ public class StorySlidePageFragment extends Fragment {
         Ln.d(story);
 
         authorName.setText(story.getAuthorName());
-        storyContent.setText(story.getContent());
+        storyContent.setText("\"" + story.getContent() + "\"");
 
 
         Picasso.with(getActivity()).load(Constants.Http.URL_BASE +  story.getBackgroundImageUrl())

@@ -7,6 +7,9 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
+
 import com.halo.app.R;
 import com.halo.app.core.api.IApiLoaderCallback;
 import com.halo.app.core.api.IApiResult;
@@ -25,6 +28,7 @@ import butterknife.InjectView;
 public class HomePageActivity extends BaseActivity implements IApiLoaderCallback {
 
     @InjectView(R.id.pager) protected ViewPager pager;
+    @InjectView(R.id.main_bg) protected ImageView mainBg;
 
     private StoryRepository storyRepository;
     private List<Story> stories;
@@ -47,6 +51,7 @@ public class HomePageActivity extends BaseActivity implements IApiLoaderCallback
     private void inti() {
         stories = new LinkedList<Story>();
         initRepository();
+        getSupportActionBar().hide();
         Bundle args = intiBundle();
         getSupportLoaderManager().initLoader(API_LOADER, args, storyRepository);
     }
@@ -125,6 +130,7 @@ public class HomePageActivity extends BaseActivity implements IApiLoaderCallback
             return;
         }
 
+        mainBg.setVisibility(View.GONE);
         mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
         pager.setAdapter(mPagerAdapter);
 //        pager.setPageTransformer(true,new ZoomOutPageTransformer());
