@@ -2,6 +2,8 @@ package com.halo.app.ui;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.v13.app.FragmentPagerAdapter;
 import android.support.v13.app.FragmentStatePagerAdapter;
@@ -11,13 +13,17 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.halo.app.BootstrapApplication;
 import com.halo.app.R;
+import com.halo.app.core.Constants;
 import com.halo.app.core.api.IApiLoaderCallback;
 import com.halo.app.core.api.IApiResult;
 import com.halo.app.core.apiResults.Stories;
 import com.halo.app.core.model.Story;
 import com.halo.app.ui.events.FetchMoreStoriesEvent;
 import com.halo.app.ui.repositories.StoryRepository;
+import com.halo.app.ui.view.ZoomOutPageTransformer;
+import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 import com.squareup.otto.Subscribe;
 
 import java.util.LinkedList;
@@ -116,6 +122,13 @@ public class HomePageActivity extends BaseWithoutActionBarActivity implements IA
         stories.addAll(newStories);
         initPager();
         duringFetching = false;
+        loadNewStoriesImagesInBackground(newStories);
+    }
+
+    private void loadNewStoriesImagesInBackground(List<Story> newStories) {
+        for (Story story: newStories){
+            BootstrapApplication.getImageLoader().loadImage(Constants.Http.URL_BASE + story.getBackgroundImageUrl(), new SimpleImageLoadingListener());
+        }
     }
 
     @Override

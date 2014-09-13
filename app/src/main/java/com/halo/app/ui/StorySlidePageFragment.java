@@ -2,6 +2,8 @@ package com.halo.app.ui;
 
 import android.annotation.TargetApi;
 import android.app.Fragment;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,12 +12,16 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.halo.app.BootstrapApplication;
 import com.halo.app.R;
 import com.halo.app.core.Constants;
 import com.halo.app.core.model.Story;
+import com.halo.app.ui.view.RoundedImageView;
 import com.halo.app.util.Ln;
+import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 import com.squareup.picasso.LruCache;
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 
 import butterknife.InjectView;
 import butterknife.Views;
@@ -30,8 +36,8 @@ public class StorySlidePageFragment extends Fragment {
 
     @InjectView(R.id.author_name) protected TextView authorName;
     @InjectView(R.id.content) protected  TextView storyContent;
-    @InjectView(R.id.author_image) protected ImageView authorImage;
-    @InjectView(R.id.story_bg) protected ImageView storyBackgroundImage;
+    @InjectView(R.id.author_image) protected RoundedImageView authorImage;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -58,15 +64,18 @@ public class StorySlidePageFragment extends Fragment {
         authorName.setText(story.getAuthorName());
         storyContent.setText("\"" + story.getContent() + "\"");
 
-        Picasso p = new Picasso.Builder(getActivity()).memoryCache(new LruCache(Integer.MAX_VALUE)).build();
+        BootstrapApplication.getImageLoader().displayImage(Constants.Http.URL_BASE + story.getAuthorImageUrl(),authorImage);
 
-        p.load(Constants.Http.URL_BASE + story.getBackgroundImageUrl())
-                .placeholder(null)
-                .into(storyBackgroundImage);
-
-        p.load(Constants.Http.URL_BASE + story.getAuthorImageUrl())
-                .placeholder(R.drawable.gravatar_icon)
-                .into(authorImage);
+        BootstrapApplication.getImageLoader().loadImage(Constants.Http.URL_BASE + story.getBackgroundImageUrl(), new SimpleImageLoadingListener() {
+            @Override
+            public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                try {
+                    rootView.setBackground(new BitmapDrawable(BootstrapApplication.getInstance().getResources(),loadedImage));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
     public void setStory(Story story) {

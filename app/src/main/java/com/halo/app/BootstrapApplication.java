@@ -6,12 +6,17 @@ import android.app.Application;
 import android.app.Instrumentation;
 import android.content.Context;
 
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+
 /**
  * Halo application
  */
 public class BootstrapApplication extends Application {
 
     private static BootstrapApplication instance;
+    private static ImageLoader imageLoader;
 
     /**
      * Create main application
@@ -37,7 +42,23 @@ public class BootstrapApplication extends Application {
 
         // Perform injection
         Injector.init(getRootModule(), this);
+        initImageLoader();
 
+    }
+
+    private void initImageLoader() {
+        DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder()
+                .cacheInMemory(true)
+                .cacheOnDisk(true)
+                .build();
+
+        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(this)
+                .defaultDisplayImageOptions(defaultOptions)
+                .build();
+
+        ImageLoader.getInstance().init(config);
+
+        imageLoader = ImageLoader.getInstance();
     }
 
     private Object getRootModule() {
@@ -57,5 +78,9 @@ public class BootstrapApplication extends Application {
 
     public static BootstrapApplication getInstance() {
         return instance;
+    }
+
+    public static ImageLoader getImageLoader() {
+        return imageLoader;
     }
 }

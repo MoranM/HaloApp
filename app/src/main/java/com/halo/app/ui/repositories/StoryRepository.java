@@ -37,7 +37,7 @@ public class StoryRepository implements LoaderManager.LoaderCallbacks<IApiResult
     @Override
     public Loader<IApiResult> onCreateLoader(int i, Bundle bundle) {
         int page = bundle.getInt("page", 0);
-        int pageSize = bundle.getInt("pageSize", 10);
+        int pageSize = bundle.getInt("pageSize", 15);
 
         apiCallExecuter = GetAllStoriesApiCallExecuter.getInstance();
         apiCallExecuter.setPage(page);
