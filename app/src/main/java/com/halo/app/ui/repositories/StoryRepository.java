@@ -1,9 +1,10 @@
 package com.halo.app.ui.repositories;
 
+import android.app.LoaderManager;
 import android.content.Context;
+import android.content.Loader;
 import android.os.Bundle;
-import android.support.v4.app.LoaderManager;
-import android.support.v4.content.Loader;
+
 
 import com.halo.app.core.api.GetAllStoriesApiCallExecuter;
 import com.halo.app.core.api.IApiLoaderCallback;

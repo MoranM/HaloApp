@@ -1,11 +1,8 @@
 package com.halo.app;
 
 import android.accounts.AccountManager;
-import android.content.Context;
-
 import com.halo.app.authenticator.ApiKeyProvider;
 import com.halo.app.authenticator.BootstrapAuthenticatorActivity;
-import com.halo.app.authenticator.LogoutService;
 import com.halo.app.core.BootstrapService;
 import com.halo.app.core.Constants;
 import com.halo.app.core.PostFromAnyThreadBus;
@@ -15,14 +12,10 @@ import com.halo.app.core.TimerService;
 import com.halo.app.core.UserAgentProvider;
 import com.halo.app.core.api.GetAllStoriesApiCallExecuter;
 import com.halo.app.ui.BootstrapTimerActivity;
-import com.halo.app.ui.CheckInsListFragment;
 import com.halo.app.ui.HomePageActivity;
-import com.halo.app.ui.MainActivity;
 import com.halo.app.ui.NavigationDrawerFragment;
 import com.halo.app.ui.NewsActivity;
-import com.halo.app.ui.NewsListFragment;
 import com.halo.app.ui.UserActivity;
-import com.halo.app.ui.UserListFragment;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.squareup.otto.Bus;
@@ -40,18 +33,14 @@ import retrofit.converter.GsonConverter;
  */
 @Module(
         complete = false,
-
+        library = true,
         injects = {
                 BootstrapApplication.class,
                 BootstrapAuthenticatorActivity.class,
-                MainActivity.class,
                 BootstrapTimerActivity.class,
-                CheckInsListFragment.class,
                 NavigationDrawerFragment.class,
                 NewsActivity.class,
-                NewsListFragment.class,
                 UserActivity.class,
-                UserListFragment.class,
                 TimerService.class,
                 GetAllStoriesApiCallExecuter.class,
                 HomePageActivity.class
@@ -65,11 +54,6 @@ public class BootstrapModule {
         return new PostFromAnyThreadBus();
     }
 
-    @Provides
-    @Singleton
-    LogoutService provideLogoutService(final Context context, final AccountManager accountManager) {
-        return new LogoutService(context, accountManager);
-    }
 
     @Provides
     BootstrapService provideBootstrapService(RestAdapter restAdapter) {

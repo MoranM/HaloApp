@@ -1,9 +1,9 @@
 package com.halo.app.ui;
 
 import android.annotation.TargetApi;
+import android.app.Fragment;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +14,7 @@ import com.halo.app.R;
 import com.halo.app.core.Constants;
 import com.halo.app.core.model.Story;
 import com.halo.app.util.Ln;
+import com.squareup.picasso.LruCache;
 import com.squareup.picasso.Picasso;
 
 import butterknife.InjectView;
@@ -57,12 +58,13 @@ public class StorySlidePageFragment extends Fragment {
         authorName.setText(story.getAuthorName());
         storyContent.setText("\"" + story.getContent() + "\"");
 
+        Picasso p = new Picasso.Builder(getActivity()).memoryCache(new LruCache(Integer.MAX_VALUE)).build();
 
-        Picasso.with(getActivity()).load(Constants.Http.URL_BASE +  story.getBackgroundImageUrl())
+        p.load(Constants.Http.URL_BASE + story.getBackgroundImageUrl())
                 .placeholder(null)
                 .into(storyBackgroundImage);
 
-        Picasso.with(getActivity()).load(Constants.Http.URL_BASE +  story.getAuthorImageUrl())
+        p.load(Constants.Http.URL_BASE + story.getAuthorImageUrl())
                 .placeholder(R.drawable.gravatar_icon)
                 .into(authorImage);
     }

@@ -1,20 +1,18 @@
 package com.halo.app.ui;
 
+import android.app.Activity;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
-
 import com.halo.app.Injector;
 import com.squareup.otto.Bus;
 
 import javax.inject.Inject;
 
-import butterknife.InjectView;
 import butterknife.Views;
 
 /**
  * Base class for all Bootstrap Activities that need fragments.
  */
-public class BaseActivity extends ActionBarActivity {
+public class BaseWithoutActionBarActivity extends Activity {
 
     @Inject
     protected Bus eventBus;

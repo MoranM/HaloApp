@@ -1,9 +1,10 @@
 package com.halo.app.ui;
 
+import android.app.Fragment;
+import android.app.FragmentManager;
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentStatePagerAdapter;
-import android.support.v4.view.PagerAdapter;
+import android.support.v13.app.FragmentPagerAdapter;
+import android.support.v13.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -17,7 +18,6 @@ import com.halo.app.core.apiResults.Stories;
 import com.halo.app.core.model.Story;
 import com.halo.app.ui.events.FetchMoreStoriesEvent;
 import com.halo.app.ui.repositories.StoryRepository;
-import com.halo.app.ui.view.ZoomOutPageTransformer;
 import com.squareup.otto.Subscribe;
 
 import java.util.LinkedList;
@@ -25,14 +25,14 @@ import java.util.List;
 
 import butterknife.InjectView;
 
-public class HomePageActivity extends BaseActivity implements IApiLoaderCallback {
+public class HomePageActivity extends BaseWithoutActionBarActivity implements IApiLoaderCallback {
 
     @InjectView(R.id.pager) protected ViewPager pager;
     @InjectView(R.id.main_bg) protected ImageView mainBg;
 
     private StoryRepository storyRepository;
     private List<Story> stories;
-    private PagerAdapter pagerAdapter;
+    private FragmentPagerAdapter pagerAdapter;
     private ScreenSlidePagerAdapter mPagerAdapter;
     private static final int API_LOADER = 1;
     private int storiesPage = 0;
@@ -51,9 +51,8 @@ public class HomePageActivity extends BaseActivity implements IApiLoaderCallback
     private void inti() {
         stories = new LinkedList<Story>();
         initRepository();
-        getSupportActionBar().hide();
         Bundle args = intiBundle();
-        getSupportLoaderManager().initLoader(API_LOADER, args, storyRepository);
+        getLoaderManager().initLoader(API_LOADER, args, storyRepository);
     }
 
     private Bundle intiBundle() {
@@ -74,7 +73,7 @@ public class HomePageActivity extends BaseActivity implements IApiLoaderCallback
     @Subscribe
     public void fetchMoreStories(FetchMoreStoriesEvent event) {
         ++storiesPage;
-        getSupportLoaderManager().restartLoader(API_LOADER,intiBundle(),storyRepository);
+        getLoaderManager().restartLoader(API_LOADER,intiBundle(),storyRepository);
         duringFetching = true;
     }
 
@@ -131,7 +130,7 @@ public class HomePageActivity extends BaseActivity implements IApiLoaderCallback
         }
 
         mainBg.setVisibility(View.GONE);
-        mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
+        mPagerAdapter = new ScreenSlidePagerAdapter(getFragmentManager());
         pager.setAdapter(mPagerAdapter);
 //        pager.setPageTransformer(true,new ZoomOutPageTransformer());
     }
@@ -144,7 +143,7 @@ public class HomePageActivity extends BaseActivity implements IApiLoaderCallback
         }
 
         @Override
-        public android.support.v4.app.Fragment getItem(int position) {
+        public Fragment getItem(int position) {
             StorySlidePageFragment fragment = new StorySlidePageFragment();
             fragment.setStory(stories.get(position));
 
