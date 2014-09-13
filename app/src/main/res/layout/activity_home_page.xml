@@ -16,4 +16,18 @@
         android:background="@drawable/app_main_bg"
         />
 
+    <TextView android:id="@+id/title"
+        android:textStyle="bold"
+        android:textSize="80dp"
+        android:text="Halo"
+        android:layout_gravity="center_vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/white"
+        android:gravity="center_horizontal"
+        android:background="#30000000"
+        android:layout_marginBottom="30dp"
+
+        />
+
 </FrameLayout>

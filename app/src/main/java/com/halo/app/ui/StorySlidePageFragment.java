@@ -9,6 +9,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -53,6 +55,9 @@ public class StorySlidePageFragment extends Fragment {
 
         Views.inject(this, rootView);
         initStoryView();
+
+        Animation mAnim = AnimationUtils.loadAnimation(getActivity(), android.R.anim.fade_in);
+        rootView.startAnimation(mAnim);
 
         return rootView;
     }
