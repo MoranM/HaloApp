@@ -13,18 +13,13 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.halo.app.BootstrapApplication;
 import com.halo.app.R;
 import com.halo.app.core.Constants;
 import com.halo.app.core.model.Story;
-import com.halo.app.ui.view.RoundedImageView;
 import com.halo.app.util.Ln;
+import com.makeramen.RoundedImageView;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
-import com.squareup.picasso.LruCache;
-import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Target;
-
 import butterknife.InjectView;
 import butterknife.Views;
 
@@ -39,7 +34,7 @@ public class StorySlidePageFragment extends Fragment {
     @InjectView(R.id.author_name) protected TextView authorName;
     @InjectView(R.id.content) protected  TextView storyContent;
     @InjectView(R.id.author_image) protected RoundedImageView authorImage;
-
+    @InjectView(R.id.story_bg) protected ImageView storyBackground;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -70,17 +65,18 @@ public class StorySlidePageFragment extends Fragment {
         storyContent.setText("\"" + story.getContent() + "\"");
 
         BootstrapApplication.getImageLoader().displayImage(Constants.Http.URL_BASE + story.getAuthorImageUrl(),authorImage);
+        BootstrapApplication.getImageLoader().displayImage(Constants.Http.URL_BASE + story.getBackgroundImageUrl(),storyBackground);
 
-        BootstrapApplication.getImageLoader().loadImage(Constants.Http.URL_BASE + story.getBackgroundImageUrl(), new SimpleImageLoadingListener() {
-            @Override
-            public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-                try {
-                    rootView.setBackground(new BitmapDrawable(BootstrapApplication.getInstance().getResources(),loadedImage));
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
+//        BootstrapApplication.getImageLoader().loadImage(Constants.Http.URL_BASE + story.getBackgroundImageUrl(), new SimpleImageLoadingListener() {
+//            @Override
+//            public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+//                try {
+//                    rootView.setBackground(new BitmapDrawable(BootstrapApplication.getInstance().getResources(),loadedImage));
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        });
     }
 
     public void setStory(Story story) {

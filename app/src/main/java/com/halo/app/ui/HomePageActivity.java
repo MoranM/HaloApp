@@ -23,6 +23,7 @@ import com.halo.app.ui.events.FetchMoreStoriesEvent;
 import com.halo.app.ui.repositories.StoryRepository;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 import com.squareup.otto.Subscribe;
+import com.xgc1986.parallaxPagerTransformer.ParallaxPagerTransformer;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -147,7 +148,7 @@ public class HomePageActivity extends BaseWithoutActionBarActivity implements IA
         title.setVisibility(View.GONE);
         mPagerAdapter = new ScreenSlidePagerAdapter(getFragmentManager());
         pager.setAdapter(mPagerAdapter);
-//        pager.setPageTransformer(true,new ZoomOutPageTransformer());
+        pager.setPageTransformer(true,new ParallaxPagerTransformer(R.id.story_bg));
     }
 
     private class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
