@@ -45,5 +45,10 @@
     <string name="title_activity_home_page">HomePage</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="whats_app_package_name">com.whatsapp</string>
+    <string name="share_subject">Get Inspired</string>
+    <string name="share_msg">Get Inspired With Hila App</string>
+    <string name="share_title">Inspire Others</string>
+    <string name="default_shared_image_name">hila_share</string>
 
 </resources>
