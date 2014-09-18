@@ -2,20 +2,13 @@ package com.halo.app;
 
 import android.accounts.AccountManager;
 import com.halo.app.authenticator.ApiKeyProvider;
-import com.halo.app.authenticator.BootstrapAuthenticatorActivity;
-import com.halo.app.core.BootstrapService;
 import com.halo.app.core.Constants;
 import com.halo.app.core.PostFromAnyThreadBus;
 import com.halo.app.core.RestAdapterRequestInterceptor;
 import com.halo.app.core.RestErrorHandler;
-import com.halo.app.core.TimerService;
 import com.halo.app.core.UserAgentProvider;
 import com.halo.app.core.api.GetAllStoriesApiCallExecuter;
-import com.halo.app.ui.BootstrapTimerActivity;
 import com.halo.app.ui.HomePageActivity;
-import com.halo.app.ui.NavigationDrawerFragment;
-import com.halo.app.ui.NewsActivity;
-import com.halo.app.ui.UserActivity;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.squareup.otto.Bus;
@@ -36,12 +29,6 @@ import retrofit.converter.GsonConverter;
         library = true,
         injects = {
                 BootstrapApplication.class,
-                BootstrapAuthenticatorActivity.class,
-                BootstrapTimerActivity.class,
-                NavigationDrawerFragment.class,
-                NewsActivity.class,
-                UserActivity.class,
-                TimerService.class,
                 GetAllStoriesApiCallExecuter.class,
                 HomePageActivity.class
         }
@@ -52,17 +39,6 @@ public class BootstrapModule {
     @Provides
     Bus provideOttoBus() {
         return new PostFromAnyThreadBus();
-    }
-
-
-    @Provides
-    BootstrapService provideBootstrapService(RestAdapter restAdapter) {
-        return new BootstrapService(restAdapter);
-    }
-
-    @Provides
-    BootstrapServiceProvider provideBootstrapServiceProvider(RestAdapter restAdapter, ApiKeyProvider apiKeyProvider) {
-        return new BootstrapServiceProvider(restAdapter, apiKeyProvider);
     }
 
     @Provides

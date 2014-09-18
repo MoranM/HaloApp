@@ -5,7 +5,6 @@ package com.halo.app.core.core;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.Assert.assertThat;
 
-import com.halo.app.core.BootstrapService;
 import com.halo.app.core.User;
 
 import java.util.List;

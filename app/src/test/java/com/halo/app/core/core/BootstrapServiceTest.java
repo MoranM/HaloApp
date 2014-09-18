@@ -6,9 +6,6 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.doReturn;
 
-import com.halo.app.core.BootstrapService;
-import com.halo.app.core.CheckIn;
-import com.halo.app.core.News;
 import com.halo.app.core.User;
 import com.halo.app.core.UserAgentProvider;
 import com.github.kevinsawicki.http.HttpRequest;

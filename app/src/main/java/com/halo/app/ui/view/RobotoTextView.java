@@ -21,6 +21,7 @@ public class RobotoTextView extends TextView {
         super(context, attrs, defStyle);
     }
 
+
     private void style(Context context) {
         Typeface tf = Typeface.createFromAsset(context.getAssets(),
                 "fonts/roboto.ttf");

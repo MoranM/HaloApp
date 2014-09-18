@@ -56,13 +56,15 @@ public class ScreenshotService {
             bitmap.compress(Bitmap.CompressFormat.JPEG, 90, fout);
             fout.flush();
             fout.close();
-            activity.switchToRegularMode();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
             return null;
         } catch (IOException e) {
             e.printStackTrace();
             return null;
+        }
+        finally {
+            activity.switchToRegularMode();
         }
 
         return path;

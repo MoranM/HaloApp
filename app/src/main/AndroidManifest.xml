@@ -49,8 +49,6 @@
                 android:value="com.halo.app.ui.MainActivity" />
         </activity>
 
-        <service android:name=".core.TimerService" android:enabled="true" android:exported="false" />
-
         <service
             android:name=".authenticator.AccountAuthenticatorService"
             android:process=":auth" >
@@ -72,9 +70,6 @@
                 someone who explicitly knows the class name
             -->
         </activity>
-
-        <activity android:name=".ui.NewsActivity" />
-        <activity android:name=".ui.UserActivity" android:label="@string/app_name" />
 
     </application>
 

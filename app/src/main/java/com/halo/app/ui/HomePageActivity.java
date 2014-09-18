@@ -7,16 +7,10 @@ import android.os.Handler;
 import android.support.v13.app.FragmentPagerAdapter;
 import android.support.v13.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.TextView;
-
-import com.halo.app.BootstrapApplication;
 import com.halo.app.R;
-import com.halo.app.core.Constants;
 import com.halo.app.core.api.IApiLoaderCallback;
 import com.halo.app.core.api.IApiResult;
 import com.halo.app.core.apiResults.Stories;
@@ -25,7 +19,6 @@ import com.halo.app.ui.events.FetchMoreStoriesEvent;
 import com.halo.app.ui.repositories.StoryRepository;
 import com.halo.app.ui.services.ShareImageService;
 import com.halo.app.ui.services.WhatsAppShareService;
-import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 import com.squareup.otto.Subscribe;
 import com.xgc1986.parallaxPagerTransformer.ParallaxPagerTransformer;
 
@@ -146,11 +139,6 @@ public class HomePageActivity extends BaseWithoutActionBarActivity implements IA
         initPager();
         duringFetching = false;
     }
-
-//    private void loadNewStoriesImagesInBackground(Story story) {
-//        BootstrapApplication.getImageLoader().loadImageSync(Constants.Http.URL_BASE + story.getBackgroundImageUrl());
-//        BootstrapApplication.getImageLoader().loadImageSync(Constants.Http.URL_BASE + story.getAuthorImageUrl());
-//    }
 
     @Override
     public void onError(String message) {
