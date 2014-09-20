@@ -54,11 +54,11 @@ public class BaseWithoutActionBarActivity extends Activity {
 
     protected void showDialog() {
         if (dialog == null){
-            dialog = ProgressDialog.show(this, "", "Loading. Please wait...", true);
+            dialog = ProgressDialog.show(this, "", "", true);
             return;
         }
 
-        dialog = ProgressDialog.show(this, "", "Loading. Please wait...", true);
+        dialog = ProgressDialog.show(this, "", "", true);
     }
 }
 

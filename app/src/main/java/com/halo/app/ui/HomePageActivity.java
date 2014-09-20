@@ -2,15 +2,19 @@ package com.halo.app.ui;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v13.app.FragmentPagerAdapter;
 import android.support.v13.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+
+import com.halo.app.BootstrapApplication;
 import com.halo.app.R;
+import com.halo.app.core.Constants;
 import com.halo.app.core.api.IApiLoaderCallback;
 import com.halo.app.core.api.IApiResult;
 import com.halo.app.core.apiResults.Stories;
@@ -19,6 +23,11 @@ import com.halo.app.ui.events.FetchMoreStoriesEvent;
 import com.halo.app.ui.repositories.StoryRepository;
 import com.halo.app.ui.services.ShareImageService;
 import com.halo.app.ui.services.WhatsAppShareService;
+import com.halo.app.util.IPreloadedCallback;
+import com.halo.app.util.ImagePreLoader;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
+import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 import com.squareup.otto.Subscribe;
 import com.xgc1986.parallaxPagerTransformer.ParallaxPagerTransformer;
 
@@ -51,7 +60,7 @@ public class HomePageActivity extends BaseWithoutActionBarActivity implements IA
     private ScreenSlidePagerAdapter mPagerAdapter;
     private static final int API_LOADER = 1;
     private int storiesPage = 0;
-    private int pageSize = 10;
+    private int pageSize = 20;
     private boolean duringFetching = false;
     private boolean endOFStories = false;
     private int currentPage = 0;
@@ -61,7 +70,6 @@ public class HomePageActivity extends BaseWithoutActionBarActivity implements IA
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_page);
 
-//        showDialog();
         initStories();
         initActionButtons();
     }
@@ -127,7 +135,7 @@ public class HomePageActivity extends BaseWithoutActionBarActivity implements IA
             return;
         }
 
-        List<Story> newStories = ((Stories) result).getResults();
+        final List<Story> newStories = ((Stories) result).getResults();
 
         if (newStories == null || newStories.isEmpty()) {
             duringFetching = false;
@@ -135,6 +143,25 @@ public class HomePageActivity extends BaseWithoutActionBarActivity implements IA
             return;
         }
 
+        if (stories.isEmpty()){ // first time preload images for better ux
+            preLoadStoryImages(newStories.subList(0,10), new IPreloadedCallback() {
+                @Override
+                public void done() {
+                    attachStories(newStories);
+                }
+
+                @Override
+                public void onError(String message) {
+                    //todo: handle errors
+                }
+            });
+        }
+        else{
+            attachStories(newStories);
+        }
+    }
+
+    private void attachStories(List<Story> newStories) {
         stories.addAll(newStories);
         initPager();
         duringFetching = false;
@@ -151,27 +178,31 @@ public class HomePageActivity extends BaseWithoutActionBarActivity implements IA
             return;
         }
 
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            public void run() {
-                mainBg.setVisibility(View.GONE);
-                switchToRegularMode();
-                mPagerAdapter = new ScreenSlidePagerAdapter(getFragmentManager());
+        mainBg.setVisibility(View.GONE);
+        switchToRegularMode();
+        mPagerAdapter = new ScreenSlidePagerAdapter(getFragmentManager());
 
-                pager.setAdapter(mPagerAdapter);
-                pager.setPageTransformer(true, new ParallaxPagerTransformer(R.id.story_bg));
-                pager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
-                    @Override
-                    public void onPageSelected(int position) {
-                        super.onPageSelected(position);
-                        currentPage = position;
-                    }
-                });
+        pager.setAdapter(mPagerAdapter);
+        pager.setPageTransformer(true, new ParallaxPagerTransformer(R.id.story_bg));
+        pager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
+            @Override
+            public void onPageSelected(int position) {
+                super.onPageSelected(position);
+                currentPage = position;
             }
-        }, 2000);
-
-//        hideDialog();
+        });
     }
+
+    private void preLoadStoryImages(List<Story> stories, IPreloadedCallback callback) {
+        List<String> imageUrls = new LinkedList<String>();
+
+        for (Story story : stories){
+            imageUrls.add(Constants.Http.URL_BASE + story.getBackgroundImageUrl());
+        }
+
+        ImagePreLoader.getInstance().preLoadImages(imageUrls,callback);
+    }
+
 
     public void switchToShareMode() {
         actionsContainerView.setVisibility(View.GONE);
