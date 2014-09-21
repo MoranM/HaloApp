@@ -1,6 +1,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:id="@+id/home_container">
 
     <android.support.v4.view.ViewPager xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/pager"
@@ -18,7 +19,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="60dp"
         android:background="#80000000"
         android:layout_alignParentBottom="true"
         android:orientation="horizontal"
@@ -29,7 +30,7 @@
         <ImageButton
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:layout_height="50dp"
+            android:layout_height="60dp"
             android:scaleType="fitCenter"
             android:id="@+id/share_fb"
             android:background="@drawable/share_fb_selector"
@@ -38,7 +39,7 @@
         <ImageButton
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:layout_height="50dp"
+            android:layout_height="60dp"
             android:scaleType="fitCenter"
             android:id="@+id/share_twitter"
             android:background="@drawable/share_twitter_selector"
@@ -47,7 +48,7 @@
         <ImageButton
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:layout_height="50dp"
+            android:layout_height="60dp"
             android:scaleType="fitCenter"
             android:id="@+id/like_btn"
             android:background="@drawable/like"
@@ -56,7 +57,7 @@
         <ImageButton
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:layout_height="50dp"
+            android:layout_height="60dp"
             android:scaleType="fitCenter"
             android:id="@+id/share_wa"
             android:background="@drawable/share_wa_selector"
@@ -66,7 +67,7 @@
         <ImageButton
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:layout_height="50dp"
+            android:layout_height="60dp"
             android:scaleType="fitCenter"
             android:id="@+id/share_mail"
             android:background="@drawable/share_mail_selector"
@@ -74,5 +75,15 @@
             />
 
         </LinearLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_alignParentBottom="true"
+        android:id="@+id/share_strip"
+        android:scaleType="fitCenter"
+        android:background="@drawable/shared_strip"
+        android:visibility="invisible"
+        />
 
 </RelativeLayout>

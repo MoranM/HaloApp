@@ -40,19 +40,31 @@ public class HomePageActivity extends BaseWithoutActionBarActivity implements IA
 
     @InjectView(R.id.pager)
     protected ViewPager pager;
+
     @InjectView(R.id.main_bg)
     protected ImageView mainBg;
+
     @InjectView(R.id.actions_container)
     protected View actionsContainerView;
 
+    @InjectView(R.id.share_strip)
+    protected ImageView shareStrip;
+
     @InjectView(R.id.share_wa)
     protected ImageButton waShare;
+
     @InjectView(R.id.share_fb)
     protected ImageButton fbShare;
+
     @InjectView(R.id.share_twitter)
     protected ImageButton twitterShare;
+
     @InjectView(R.id.share_mail)
     protected ImageButton mailShare;
+
+    @InjectView(R.id.home_container)
+    protected View mainContainer;
+
 
     private StoryRepository storyRepository;
     private List<Story> stories;
@@ -144,7 +156,7 @@ public class HomePageActivity extends BaseWithoutActionBarActivity implements IA
         }
 
         if (stories.isEmpty()){ // first time preload images for better ux
-            preLoadStoryImages(newStories.subList(0,10), new IPreloadedCallback() {
+            preLoadStoryImages(newStories.subList(0,6), new IPreloadedCallback() {
                 @Override
                 public void done() {
                     attachStories(newStories);
@@ -206,10 +218,12 @@ public class HomePageActivity extends BaseWithoutActionBarActivity implements IA
 
     public void switchToShareMode() {
         actionsContainerView.setVisibility(View.GONE);
+        shareStrip.setVisibility(View.VISIBLE);
     }
 
     public void switchToRegularMode() {
         actionsContainerView.setVisibility(View.VISIBLE);
+        shareStrip.setVisibility(View.GONE);
     }
 
     private class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
