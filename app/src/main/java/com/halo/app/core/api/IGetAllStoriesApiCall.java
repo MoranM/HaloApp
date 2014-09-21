@@ -14,3 +14,4 @@ public interface IGetAllStoriesApiCall {
     @GET(Constants.Http.URL_STORIES)
     Stories getApiResult(@Query("page") int page, @Query("pageSize") int pageSize);
 }
+

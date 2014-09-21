@@ -8,9 +8,11 @@ import com.halo.app.core.RestAdapterRequestInterceptor;
 import com.halo.app.core.RestErrorHandler;
 import com.halo.app.core.UserAgentProvider;
 import com.halo.app.core.api.GetAllStoriesApiCallExecuter;
+import com.halo.app.core.api.StoriesBackgroundsApiCallExecuter;
 import com.halo.app.ui.HomePageActivity;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.halo.app.ui.LandingActivity;
 import com.squareup.otto.Bus;
 
 import javax.inject.Singleton;
@@ -30,7 +32,9 @@ import retrofit.converter.GsonConverter;
         injects = {
                 BootstrapApplication.class,
                 GetAllStoriesApiCallExecuter.class,
-                HomePageActivity.class
+                HomePageActivity.class,
+                LandingActivity.class,
+                StoriesBackgroundsApiCallExecuter.class
         }
 )
 public class BootstrapModule {

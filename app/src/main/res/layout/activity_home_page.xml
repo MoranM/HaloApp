@@ -9,14 +9,6 @@
         android:background="@android:color/black"
         android:layout_height="match_parent" />
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scaleType="fitCenter"
-        android:id="@+id/main_bg"
-        android:background="@drawable/app_main_bg"
-        />
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="60dp"

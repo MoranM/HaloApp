@@ -2,6 +2,7 @@ package com.halo.app.core.apiResults;
 
 import com.halo.app.core.api.IApiResult;
 import com.halo.app.core.model.Story;
+import com.halo.app.core.model.StoryBackground;
 
 import java.util.List;
 
@@ -15,3 +16,5 @@ public class Stories implements IApiResult {
         return stories;
     }
 }
+
+

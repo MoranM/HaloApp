@@ -2,17 +2,13 @@ package com.halo.app.ui;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v13.app.FragmentPagerAdapter;
 import android.support.v13.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-
-import com.halo.app.BootstrapApplication;
 import com.halo.app.R;
 import com.halo.app.core.Constants;
 import com.halo.app.core.api.IApiLoaderCallback;
@@ -25,12 +21,8 @@ import com.halo.app.ui.services.ShareImageService;
 import com.halo.app.ui.services.WhatsAppShareService;
 import com.halo.app.util.IPreloadedCallback;
 import com.halo.app.util.ImagePreLoader;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
-import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 import com.squareup.otto.Subscribe;
 import com.xgc1986.parallaxPagerTransformer.ParallaxPagerTransformer;
-
 import java.util.LinkedList;
 import java.util.List;
 
@@ -41,8 +33,8 @@ public class HomePageActivity extends BaseWithoutActionBarActivity implements IA
     @InjectView(R.id.pager)
     protected ViewPager pager;
 
-    @InjectView(R.id.main_bg)
-    protected ImageView mainBg;
+//    @InjectView(R.id.main_bg)
+//    protected ImageView mainBg;
 
     @InjectView(R.id.actions_container)
     protected View actionsContainerView;
@@ -155,22 +147,24 @@ public class HomePageActivity extends BaseWithoutActionBarActivity implements IA
             return;
         }
 
-        if (stories.isEmpty()){ // first time preload images for better ux
-            preLoadStoryImages(newStories.subList(0,6), new IPreloadedCallback() {
-                @Override
-                public void done() {
-                    attachStories(newStories);
-                }
+        attachStories(newStories);
 
-                @Override
-                public void onError(String message) {
-                    //todo: handle errors
-                }
-            });
-        }
-        else{
-            attachStories(newStories);
-        }
+//        if (stories.isEmpty()){ // first time preload images for better ux
+//            preLoadStoryImages(newStories.subList(0,6), new IPreloadedCallback() {
+//                @Override
+//                public void done() {
+//                    attachStories(newStories);
+//                }
+//
+//                @Override
+//                public void onError(String message) {
+//                    //todo: handle errors
+//                }
+//            });
+//        }
+//        else{
+//            attachStories(newStories);
+//        }
     }
 
     private void attachStories(List<Story> newStories) {
@@ -190,7 +184,7 @@ public class HomePageActivity extends BaseWithoutActionBarActivity implements IA
             return;
         }
 
-        mainBg.setVisibility(View.GONE);
+       // mainBg.setVisibility(View.GONE);
         switchToRegularMode();
         mPagerAdapter = new ScreenSlidePagerAdapter(getFragmentManager());
 
