@@ -1,5 +1,6 @@
 package com.halo.app.ui;
 
+import android.animation.ObjectAnimator;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.os.Bundle;
@@ -7,6 +8,7 @@ import android.support.v13.app.FragmentPagerAdapter;
 import android.support.v13.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.View;
+import android.view.animation.BounceInterpolator;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import com.halo.app.R;
@@ -33,9 +35,6 @@ public class HomePageActivity extends BaseWithoutActionBarActivity implements IA
     @InjectView(R.id.pager)
     protected ViewPager pager;
 
-//    @InjectView(R.id.main_bg)
-//    protected ImageView mainBg;
-
     @InjectView(R.id.actions_container)
     protected View actionsContainerView;
 
@@ -54,9 +53,8 @@ public class HomePageActivity extends BaseWithoutActionBarActivity implements IA
     @InjectView(R.id.share_mail)
     protected ImageButton mailShare;
 
-    @InjectView(R.id.home_container)
-    protected View mainContainer;
-
+    @InjectView(R.id.like_btn)
+    protected ImageButton like;
 
     private StoryRepository storyRepository;
     private List<Story> stories;
@@ -64,7 +62,7 @@ public class HomePageActivity extends BaseWithoutActionBarActivity implements IA
     private ScreenSlidePagerAdapter mPagerAdapter;
     private static final int API_LOADER = 1;
     private int storiesPage = 0;
-    private int pageSize = 20;
+    private int pageSize = 15;
     private boolean duringFetching = false;
     private boolean endOFStories = false;
     private int currentPage = 0;
@@ -90,6 +88,17 @@ public class HomePageActivity extends BaseWithoutActionBarActivity implements IA
             @Override
             public void onClick(View view) {
                 ShareImageService.getInstance().share(HomePageActivity.this);
+            }
+        });
+
+        like.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ObjectAnimator animY = ObjectAnimator.ofFloat(like, "translationY", -10f, 0f, 10f);
+                animY.setDuration(1000);//1sec
+                animY.setInterpolator(new BounceInterpolator());
+                animY.setRepeatCount(0);
+                animY.start();
             }
         });
     }
@@ -147,24 +156,22 @@ public class HomePageActivity extends BaseWithoutActionBarActivity implements IA
             return;
         }
 
-        attachStories(newStories);
+        if (!stories.isEmpty()){ // load backgrounds before appending stories
+            preLoadStoryImages(newStories.subList(0,9), new IPreloadedCallback() {
+                @Override
+                public void done() {
+                    attachStories(newStories);
+                }
 
-//        if (stories.isEmpty()){ // first time preload images for better ux
-//            preLoadStoryImages(newStories.subList(0,6), new IPreloadedCallback() {
-//                @Override
-//                public void done() {
-//                    attachStories(newStories);
-//                }
-//
-//                @Override
-//                public void onError(String message) {
-//                    //todo: handle errors
-//                }
-//            });
-//        }
-//        else{
-//            attachStories(newStories);
-//        }
+                @Override
+                public void onError(String message) {
+                    //todo: handle errors
+                }
+            });
+        }
+        else{
+            attachStories(newStories);
+        }
     }
 
     private void attachStories(List<Story> newStories) {
