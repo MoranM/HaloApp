@@ -44,7 +44,7 @@ public class LandingActivity extends BaseWithoutActionBarActivity implements Loa
     @Override
     public Loader<IApiResult> onCreateLoader(int i, Bundle bundle) {
         int page = 0;
-        int pageSize = 10;
+        int pageSize = 15;
 
         apiCallExecuter = StoriesBackgroundsApiCallExecuter.getInstance();
         apiCallExecuter.setPage(page);

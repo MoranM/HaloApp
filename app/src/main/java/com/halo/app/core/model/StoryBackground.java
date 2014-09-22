@@ -9,7 +9,7 @@ public class StoryBackground implements Serializable {
     @SerializedName("_id")
     private String id;
 
-    private String imageUrl;
+    private String backgroundImageUrl;
 
     public String getId() {
         return id;
@@ -20,10 +20,10 @@ public class StoryBackground implements Serializable {
     }
 
     public String getBackgroundImageUrl() {
-        return imageUrl;
+        return backgroundImageUrl;
     }
 
     public void setBackgroundImageUrl(String backgroundImageUrl) {
-        this.imageUrl = backgroundImageUrl;
+        this.backgroundImageUrl = backgroundImageUrl;
     }
 }
