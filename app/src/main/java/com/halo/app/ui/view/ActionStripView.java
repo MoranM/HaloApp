@@ -88,6 +88,7 @@ public class ActionStripView extends LinearLayout {
             like.setBackgroundResource(R.drawable.like);
             likeCounter.setVisibility(INVISIBLE);
         }
+        like.invalidate();
     }
 
     private void init() {

@@ -2,8 +2,6 @@ package com.halo.app.ui;
 
 import android.annotation.TargetApi;
 import android.app.Fragment;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -19,7 +17,6 @@ import com.halo.app.core.Constants;
 import com.halo.app.core.model.Story;
 import com.halo.app.util.Ln;
 import com.makeramen.RoundedImageView;
-import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 import butterknife.InjectView;
 import butterknife.Views;
 
@@ -57,7 +54,17 @@ public class StorySlidePageFragment extends Fragment {
         return rootView;
     }
 
-    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
+    @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1)
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser) {
+            HomePageActivity activity = (HomePageActivity) getActivity();
+            activity.onStoryVisible();
+        }
+        else {  }
+    }
+
     private void initStoryView() {
         Ln.d(story);
 
@@ -66,17 +73,6 @@ public class StorySlidePageFragment extends Fragment {
 
         BootstrapApplication.getImageLoader().displayImage(Constants.Http.URL_BASE + story.getAuthorImageUrl(),authorImage);
         BootstrapApplication.getImageLoader().displayImage(Constants.Http.URL_BASE + story.getBackgroundImageUrl(),storyBackground);
-
-//        BootstrapApplication.getImageLoader().loadImage(Constants.Http.URL_BASE + story.getBackgroundImageUrl(), new SimpleImageLoadingListener() {
-//            @Override
-//            public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-//                try {
-//                    rootView.setBackground(new BitmapDrawable(BootstrapApplication.getInstance().getResources(),loadedImage));
-//                } catch (Exception e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//        });
     }
 
     public void setStory(Story story) {

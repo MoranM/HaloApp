@@ -187,6 +187,10 @@ public class HomePageActivity extends BaseWithoutActionBarActivity implements IA
         shareStrip.setVisibility(View.GONE);
     }
 
+    public void onStoryVisible() {
+        actionStrip.setStory(stories.get(currentPage));
+    }
+
     private class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
         private final int fetchMoreBound = 5;
 
@@ -199,7 +203,6 @@ public class HomePageActivity extends BaseWithoutActionBarActivity implements IA
             StorySlidePageFragment fragment = new StorySlidePageFragment();
             final Story story = stories.get(position);
             fragment.setStory(story);
-            actionStrip.setStory(story);
 
             if (needToFetchMoreStories(position) && !duringFetching && !endOFStories)
                 eventBus.post(new FetchMoreStoriesEvent(true));
