@@ -16,6 +16,7 @@ public class Story implements Serializable {
     private String content;
     private String authorImageUrl;
     private String backgroundImageUrl;
+    private int likes;
 
     public String getId() {
         return id;
@@ -55,6 +56,14 @@ public class Story implements Serializable {
 
     public void setBackgroundImageUrl(String backgroundImageUrl) {
         this.backgroundImageUrl = backgroundImageUrl;
+    }
+
+    public int getLikes() {
+        return likes;
+    }
+
+    public void setLikes(int likes) {
+        this.likes = likes;
     }
 }
 

@@ -1,0 +1,66 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/actions_container"
+    android:layout_width="match_parent"
+    android:layout_height="60dp"
+    android:background="#80000000"
+    android:gravity="center_horizontal"
+    android:orientation="horizontal"
+    android:visibility="visible">
+
+    <ImageButton
+        android:id="@+id/share_fb"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_centerVertical="true"
+        android:layout_weight="1"
+        android:background="@drawable/share_fb_selector"
+        android:scaleType="fitCenter" />
+
+    <ImageButton
+        android:id="@+id/share_twitter"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_centerVertical="true"
+        android:layout_weight="1"
+        android:background="@drawable/share_twitter_selector"
+        android:scaleType="fitCenter" />
+
+    <RelativeLayout
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_weight="1"
+        android:id="@+id/like_btn"
+        android:background="@drawable/like">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:id="@+id/like_counter"
+            android:visibility="invisible"
+            android:textColor="@android:color/white"
+            android:layout_centerInParent="true"
+            android:layout_centerHorizontal="true"
+            android:textSize="20dp"/>
+
+    </RelativeLayout>
+
+
+    <ImageButton
+        android:id="@+id/share_wa"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_centerVertical="true"
+        android:layout_weight="1"
+        android:background="@drawable/share_wa_selector"
+        android:scaleType="fitCenter" />
+
+    <ImageButton
+        android:id="@+id/share_mail"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_centerVertical="true"
+        android:layout_weight="1"
+        android:background="@drawable/share_mail_selector"
+        android:scaleType="fitCenter" />
+
+</LinearLayout>

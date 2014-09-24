@@ -13,6 +13,7 @@ import com.halo.app.ui.HomePageActivity;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.halo.app.ui.LandingActivity;
+import com.halo.app.ui.view.ActionStripView;
 import com.squareup.otto.Bus;
 
 import javax.inject.Singleton;
@@ -34,7 +35,8 @@ import retrofit.converter.GsonConverter;
                 GetAllStoriesApiCallExecuter.class,
                 HomePageActivity.class,
                 LandingActivity.class,
-                StoriesBackgroundsApiCallExecuter.class
+                StoriesBackgroundsApiCallExecuter.class,
+                ActionStripView.class
         }
 )
 public class BootstrapModule {

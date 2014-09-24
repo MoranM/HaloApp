@@ -1,81 +1,29 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/home_container"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:id="@+id/home_container">
+    android:layout_height="match_parent">
 
     <android.support.v4.view.ViewPager xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/pager"
         android:layout_width="match_parent"
-        android:background="@android:color/black"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:background="@android:color/black" />
 
-    <LinearLayout
+    <com.halo.app.ui.view.ActionStripView
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:background="#80000000"
+        android:id="@+id/action_strip"
         android:layout_alignParentBottom="true"
-        android:orientation="horizontal"
-        android:id="@+id/actions_container"
-        android:gravity="center_horizontal"
-        android:visibility="gone"
-        >
-        <ImageButton
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="60dp"
-            android:scaleType="fitCenter"
-            android:id="@+id/share_fb"
-            android:background="@drawable/share_fb_selector"
-            android:layout_centerVertical="true"
-            />
-        <ImageButton
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="60dp"
-            android:scaleType="fitCenter"
-            android:id="@+id/share_twitter"
-            android:background="@drawable/share_twitter_selector"
-            android:layout_centerVertical="true"
-            />
-        <ImageButton
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="60dp"
-            android:scaleType="fitCenter"
-            android:id="@+id/like_btn"
-            android:background="@drawable/like"
-            android:layout_centerVertical="true"
-            />
-        <ImageButton
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="60dp"
-            android:scaleType="fitCenter"
-            android:id="@+id/share_wa"
-            android:background="@drawable/share_wa_selector"
-            android:layout_centerVertical="true"
-            />
+        android:layout_height="wrap_content">
 
-        <ImageButton
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="60dp"
-            android:scaleType="fitCenter"
-            android:id="@+id/share_mail"
-            android:background="@drawable/share_mail_selector"
-            android:layout_centerVertical="true"
-            />
-
-        </LinearLayout>
+    </com.halo.app.ui.view.ActionStripView>
 
     <ImageView
+        android:id="@+id/share_strip"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_alignParentBottom="true"
-        android:id="@+id/share_strip"
-        android:scaleType="fitCenter"
         android:background="@drawable/shared_strip"
-        android:visibility="invisible"
-        />
+        android:scaleType="fitCenter"
+        android:visibility="invisible" />
 
 </RelativeLayout>
