@@ -10,4 +10,10 @@
         android:src="@drawable/app_main_bg"
        />
 
+    <ProgressBar android:id="@+id/loading_spinner"
+        style="?android:progressBarStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true" />
+
 </RelativeLayout>

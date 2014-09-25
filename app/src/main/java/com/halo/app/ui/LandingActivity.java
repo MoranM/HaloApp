@@ -4,6 +4,7 @@ import android.app.LoaderManager;
 import android.content.Intent;
 import android.content.Loader;
 import android.os.Bundle;
+import android.widget.ProgressBar;
 
 import com.halo.app.R;
 import com.halo.app.core.Constants;
@@ -18,15 +19,21 @@ import com.halo.app.util.Ln;
 import java.util.LinkedList;
 import java.util.List;
 
+import butterknife.InjectView;
+
 /**
  * Created by MoranDev on 9/21/2014.
  */
 public class LandingActivity extends BaseWithoutActionBarActivity implements LoaderManager.LoaderCallbacks<IApiResult> {
 
+    @InjectView(R.id.loading_spinner)
+    protected ProgressBar spinner;
+
     private static final int BG_LOADER = 2;
 
     private StoriesBackgroundsApiCallExecuter apiCallExecuter;
     private ApiDataLoader loader;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -8,6 +8,8 @@ import android.support.v13.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
+
 import com.halo.app.R;
 import com.halo.app.core.Constants;
 import com.halo.app.core.api.IApiLoaderCallback;
@@ -60,6 +62,7 @@ public class HomePageActivity extends BaseWithoutActionBarActivity implements IA
     private boolean duringFetching = false;
     private boolean endOFStories = false;
     private int currentPage = 0;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -231,7 +234,6 @@ public class HomePageActivity extends BaseWithoutActionBarActivity implements IA
 
         ImagePreLoader.getInstance().preLoadImages(imageUrls,callback);
     }
-
 
     public void switchToShareMode() {
         actionsContainerView.setVisibility(View.GONE);

@@ -1,7 +1,5 @@
 package com.halo.app;
 
-import android.accounts.AccountManager;
-import com.halo.app.authenticator.ApiKeyProvider;
 import com.halo.app.core.Constants;
 import com.halo.app.core.PostFromAnyThreadBus;
 import com.halo.app.core.RestAdapterRequestInterceptor;
@@ -52,10 +50,6 @@ public class BootstrapModule {
         return new PostFromAnyThreadBus();
     }
 
-    @Provides
-    ApiKeyProvider provideApiKeyProvider(AccountManager accountManager) {
-        return new ApiKeyProvider(accountManager);
-    }
 
     @Provides
     Gson provideGson() {
