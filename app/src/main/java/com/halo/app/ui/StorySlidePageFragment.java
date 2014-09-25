@@ -19,6 +19,7 @@ import com.halo.app.core.model.Story;
 import com.halo.app.ui.events.StoryVisibleEvent;
 import com.halo.app.util.Ln;
 import com.makeramen.RoundedImageView;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.squareup.otto.Bus;
 
 import javax.inject.Inject;
@@ -80,7 +81,9 @@ public class StorySlidePageFragment extends Fragment {
         authorName.setText(story.getAuthorName());
         storyContent.setText("\"" + story.getContent() + "\"");
 
-        BootstrapApplication.getImageLoader().displayImage(Constants.Http.URL_BASE + story.getAuthorImageUrl(),authorImage);
+        DisplayImageOptions authorDisplayOptions = BootstrapApplication.getAuthorImageDisplayOptions();
+
+        BootstrapApplication.getImageLoader().displayImage(Constants.Http.URL_BASE + story.getAuthorImageUrl(),authorImage, authorDisplayOptions);
         BootstrapApplication.getImageLoader().displayImage(Constants.Http.URL_BASE + story.getBackgroundImageUrl(),storyBackground);
     }
 

@@ -18,6 +18,7 @@ public class BootstrapApplication extends Application {
 
     private static BootstrapApplication instance;
     private static ImageLoader imageLoader;
+    private static DisplayImageOptions defaultauthorImageDisplayOptions;
 
     /**
      * Create main application
@@ -84,5 +85,19 @@ public class BootstrapApplication extends Application {
 
     public static ImageLoader getImageLoader() {
         return imageLoader;
+    }
+
+    public static DisplayImageOptions getAuthorImageDisplayOptions(){
+        if (defaultauthorImageDisplayOptions != null)
+            return defaultauthorImageDisplayOptions;
+
+        defaultauthorImageDisplayOptions = new DisplayImageOptions.Builder()
+                .cacheInMemory(true)
+                .cacheOnDisk(true)
+                .displayer(new FadeInBitmapDisplayer(300))
+                .showImageOnLoading(R.drawable.default_author)
+                .build();
+
+        return defaultauthorImageDisplayOptions;
     }
 }

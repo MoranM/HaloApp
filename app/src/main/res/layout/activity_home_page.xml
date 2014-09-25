@@ -9,6 +9,14 @@
         android:layout_height="match_parent"
         android:background="@android:color/black" />
 
+    <ImageView
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_alignParentTop="true"
+        android:layout_margin="20dp"
+        android:id="@+id/back_to_start"
+        android:src="@drawable/back_to_start_btn"/>
+
     <com.halo.app.ui.view.ActionStripView
         android:layout_width="match_parent"
         android:id="@+id/action_strip"

@@ -34,7 +34,7 @@ public class StoryLikeLoaderWrapper implements LoaderManager.LoaderCallbacks<IAp
 
     @Override
     public Loader<IApiResult> onCreateLoader(int i, Bundle bundle) {
-        String storyId = bundle.getString("story-id", "");
+        String storyId = bundle.getString("story-id");
 
         apiCallExecuter = LikeStoryApiCallExecuter.getInstance();
         apiCallExecuter.setStoryId(storyId);

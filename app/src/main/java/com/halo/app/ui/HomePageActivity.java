@@ -41,6 +41,9 @@ public class HomePageActivity extends BaseWithoutActionBarActivity implements IA
     @InjectView(R.id.share_strip)
     protected ImageView shareStrip;
 
+    @InjectView(R.id.back_to_start)
+    protected ImageView backToStart;
+
     @InjectView(R.id.action_strip)
     protected ActionStripView actionStrip;
 
@@ -64,6 +67,16 @@ public class HomePageActivity extends BaseWithoutActionBarActivity implements IA
         setContentView(R.layout.activity_home_page);
 
         initStories();
+        initActionButtons();
+    }
+
+    private void initActionButtons() {
+        backToStart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                pager.setCurrentItem(0, true);
+            }
+        });
     }
 
     private void initStories() {
@@ -222,11 +235,13 @@ public class HomePageActivity extends BaseWithoutActionBarActivity implements IA
 
     public void switchToShareMode() {
         actionsContainerView.setVisibility(View.GONE);
+        backToStart.setVisibility(View.GONE);
         shareStrip.setVisibility(View.VISIBLE);
     }
 
     public void switchToRegularMode() {
         actionsContainerView.setVisibility(View.VISIBLE);
+        backToStart.setVisibility(View.VISIBLE);
         shareStrip.setVisibility(View.GONE);
     }
 
