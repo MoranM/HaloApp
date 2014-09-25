@@ -8,8 +8,6 @@ import android.support.v13.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
-
 import com.halo.app.R;
 import com.halo.app.core.Constants;
 import com.halo.app.core.api.IApiLoaderCallback;
@@ -23,10 +21,10 @@ import com.halo.app.ui.events.StoryVisibleEvent;
 import com.halo.app.ui.loaders.StoryLikeLoaderWrapper;
 import com.halo.app.ui.loaders.StoryLoaderWrapper;
 import com.halo.app.ui.view.ActionStripView;
+import com.halo.app.ui.view.ParallaxPagerTransformer;
 import com.halo.app.util.IPreloadedCallback;
 import com.halo.app.util.ImagePreLoader;
 import com.squareup.otto.Subscribe;
-import com.xgc1986.parallaxPagerTransformer.ParallaxPagerTransformer;
 import java.util.LinkedList;
 import java.util.List;
 
