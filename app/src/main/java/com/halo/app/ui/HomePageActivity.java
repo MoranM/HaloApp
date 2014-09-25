@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.v13.app.FragmentPagerAdapter;
 import android.support.v13.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import com.halo.app.R;
@@ -15,8 +14,12 @@ import com.halo.app.core.api.IApiLoaderCallback;
 import com.halo.app.core.api.IApiResult;
 import com.halo.app.core.apiResults.Stories;
 import com.halo.app.core.model.Story;
+import com.halo.app.core.storage.SharedPreferencesStorage;
 import com.halo.app.ui.events.FetchMoreStoriesEvent;
-import com.halo.app.ui.repositories.StoryRepository;
+import com.halo.app.ui.events.LikeStoryEvent;
+import com.halo.app.ui.events.StoryVisibleEvent;
+import com.halo.app.ui.loaders.StoryLikeLoaderWrapper;
+import com.halo.app.ui.loaders.StoryLoaderWrapper;
 import com.halo.app.ui.view.ActionStripView;
 import com.halo.app.util.IPreloadedCallback;
 import com.halo.app.util.ImagePreLoader;
@@ -41,11 +44,14 @@ public class HomePageActivity extends BaseWithoutActionBarActivity implements IA
     @InjectView(R.id.action_strip)
     protected ActionStripView actionStrip;
 
-    private StoryRepository storyRepository;
+    private StoryLoaderWrapper storyLoaderWrapper;
+    private StoryLikeLoaderWrapper storyLikeLoaderWrapper;
+
     private List<Story> stories;
     private FragmentPagerAdapter pagerAdapter;
     private ScreenSlidePagerAdapter mPagerAdapter;
     private static final int API_LOADER = 1;
+    private static final int API_LIKE_STORY = 2;
     private int storiesPage = 0;
     private int pageSize = 15;
     private boolean duringFetching = false;
@@ -60,12 +66,11 @@ public class HomePageActivity extends BaseWithoutActionBarActivity implements IA
         initStories();
     }
 
-
     private void initStories() {
         stories = new LinkedList<Story>();
-        initRepository();
+        initLoaders();
         Bundle args = intiBundle();
-        getLoaderManager().initLoader(API_LOADER, args, storyRepository);
+        getLoaderManager().initLoader(API_LOADER, args, storyLoaderWrapper);
     }
 
     private Bundle intiBundle() {
@@ -76,11 +81,13 @@ public class HomePageActivity extends BaseWithoutActionBarActivity implements IA
         return bundle;
     }
 
-    private void initRepository() {
-        storyRepository = StoryRepository.getInsatnce();
+    private void initLoaders() {
+        storyLoaderWrapper = StoryLoaderWrapper.getInsatnce();
+        storyLoaderWrapper.setContext(this);
+        storyLoaderWrapper.setApiLoaderCallback(this);
 
-        storyRepository.setContext(this);
-        storyRepository.setApiLoaderCallback(this);
+        storyLikeLoaderWrapper = StoryLikeLoaderWrapper.getInsatnce();
+        storyLikeLoaderWrapper.setContext(this);
     }
 
     public Story getCurrentStory() {
@@ -93,8 +100,44 @@ public class HomePageActivity extends BaseWithoutActionBarActivity implements IA
     @Subscribe
     public void fetchMoreStories(FetchMoreStoriesEvent event) {
         ++storiesPage;
-        getLoaderManager().restartLoader(API_LOADER, intiBundle(), storyRepository);
+        getLoaderManager().restartLoader(API_LOADER, intiBundle(), storyLoaderWrapper);
         duringFetching = true;
+    }
+
+    @Subscribe public void userLikedStory(LikeStoryEvent event){
+        Story currentStory = stories.get(currentPage);
+        if (currentStory == null)
+            return;
+
+        if (isStoryLikedByUser(currentStory)){
+            return;
+        }
+
+        int likes = currentStory.getLikes();
+        likes++;
+        currentStory.setLikes(likes);
+
+        actionStrip.setLikeBtnState(likes,true);
+        updateStoryLikes(currentStory);
+    }
+
+    @Subscribe public void  onStoryVisibleEvent(StoryVisibleEvent event){
+        Story story = event.getStory();
+
+        actionStrip.setLikeBtnState(story.getLikes(), isStoryLikedByUser(story));
+    }
+
+    private boolean isStoryLikedByUser(Story story) {
+        return !SharedPreferencesStorage.getInstance().get(story.getId()).isEmpty();
+    }
+
+    private void updateStoryLikes(Story story) {
+        SharedPreferencesStorage.getInstance().save(story.getId(),"liked");
+
+        final Bundle bundle = new Bundle();
+        bundle.putString("story-id", story.getId());
+
+        getLoaderManager().restartLoader(API_LIKE_STORY, bundle, storyLikeLoaderWrapper);
     }
 
     @Override
@@ -185,10 +228,6 @@ public class HomePageActivity extends BaseWithoutActionBarActivity implements IA
     public void switchToRegularMode() {
         actionsContainerView.setVisibility(View.VISIBLE);
         shareStrip.setVisibility(View.GONE);
-    }
-
-    public void onStoryVisible() {
-        actionStrip.setStory(stories.get(currentPage));
     }
 
     private class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {

@@ -12,11 +12,17 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.halo.app.BootstrapApplication;
+import com.halo.app.Injector;
 import com.halo.app.R;
 import com.halo.app.core.Constants;
 import com.halo.app.core.model.Story;
+import com.halo.app.ui.events.StoryVisibleEvent;
 import com.halo.app.util.Ln;
 import com.makeramen.RoundedImageView;
+import com.squareup.otto.Bus;
+
+import javax.inject.Inject;
+
 import butterknife.InjectView;
 import butterknife.Views;
 
@@ -28,6 +34,9 @@ public class StorySlidePageFragment extends Fragment {
     private Story story;
     ViewGroup rootView;
 
+    @Inject
+    protected Bus eventBus;
+
     @InjectView(R.id.author_name) protected TextView authorName;
     @InjectView(R.id.content) protected  TextView storyContent;
     @InjectView(R.id.author_image) protected RoundedImageView authorImage;
@@ -36,6 +45,7 @@ public class StorySlidePageFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Injector.inject(this);
     }
 
     @Override
@@ -59,8 +69,7 @@ public class StorySlidePageFragment extends Fragment {
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         if (isVisibleToUser) {
-            HomePageActivity activity = (HomePageActivity) getActivity();
-            activity.onStoryVisible();
+            eventBus.post(new StoryVisibleEvent(story));
         }
         else {  }
     }

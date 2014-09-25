@@ -2,6 +2,7 @@ package com.halo.app.ui.view;
 
 import android.animation.ObjectAnimator;
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
@@ -16,6 +17,7 @@ import com.halo.app.Injector;
 import com.halo.app.R;
 import com.halo.app.core.model.Story;
 import com.halo.app.ui.HomePageActivity;
+import com.halo.app.ui.events.LikeStoryEvent;
 import com.halo.app.ui.services.ShareImageService;
 import com.halo.app.ui.services.WhatsAppShareService;
 import com.squareup.otto.Bus;
@@ -50,7 +52,6 @@ public class ActionStripView extends LinearLayout {
 
     @Inject
     protected Bus eventBus;
-    private Story story;
 
     public ActionStripView(Context context) {
         super(context);
@@ -67,20 +68,17 @@ public class ActionStripView extends LinearLayout {
         init();
     }
 
-    public void setStory(Story story){
-        this.story = story;
-        initLikeBtn();
-    }
-
-    private void initLikeBtn() {
-        int likes= story.getLikes();
-
-        setLikeBtnState(likes);
-    }
-
-    private void setLikeBtnState(int likes) {
-        if(likes > 0){
+    public void setLikeBtnState(int likes, boolean userLiked) {
+        if (userLiked){
+            like.setBackgroundResource(R.drawable.user_liked_bg);
+            likeCounter.setTextColor(getResources().getColor(R.color.user_liked_btn_text_color));
+        }
+        else{
             like.setBackgroundResource(R.drawable.liked_bg);
+            likeCounter.setTextColor(getResources().getColor(R.color.liked_btn_text_color));
+        }
+
+        if(likes > 0){
             likeCounter.setText(likes + "");
             likeCounter.setVisibility(VISIBLE);
         }
@@ -88,6 +86,7 @@ public class ActionStripView extends LinearLayout {
             like.setBackgroundResource(R.drawable.like);
             likeCounter.setVisibility(INVISIBLE);
         }
+
         like.invalidate();
     }
 
@@ -129,18 +128,13 @@ public class ActionStripView extends LinearLayout {
             @Override
             public void onClick(View view) {
                 doAnimation();
-                updateCounter();
+                notifyOnlikeSelected();
             }
         });
     }
 
-    private void updateCounter() {
-        int likes = story.getLikes();
-        likes++;
-
-        story.setLikes(likes);
-        setLikeBtnState(likes);
-        //update server;
+    private void notifyOnlikeSelected() {
+        eventBus.post(new LikeStoryEvent());
     }
 
     private void doAnimation() {

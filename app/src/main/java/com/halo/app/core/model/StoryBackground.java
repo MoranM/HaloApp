@@ -27,3 +27,4 @@ public class StoryBackground implements Serializable {
         this.backgroundImageUrl = backgroundImageUrl;
     }
 }
+

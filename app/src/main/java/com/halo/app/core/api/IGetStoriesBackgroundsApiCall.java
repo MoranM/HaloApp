@@ -11,3 +11,4 @@ public interface IGetStoriesBackgroundsApiCall {
     @GET(Constants.Http.URL_BACKGROUNDS)
     StoriesBackgrounds getApiResult(@Query("page") int page, @Query("pageSize") int pageSize);
 }
+

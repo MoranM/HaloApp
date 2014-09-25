@@ -1,4 +1,4 @@
-package com.halo.app.ui.repositories;
+package com.halo.app.ui.loaders;
 
 import android.app.LoaderManager;
 import android.content.Context;
@@ -14,22 +14,22 @@ import com.halo.app.ui.ApiDataLoader;
 /**
  * Created by MoranDev on 9/12/2014.
  */
-public class StoryRepository implements LoaderManager.LoaderCallbacks<IApiResult>{
+public class StoryLoaderWrapper implements LoaderManager.LoaderCallbacks<IApiResult>{
 
     private Context context;
     private GetAllStoriesApiCallExecuter apiCallExecuter;
     private ApiDataLoader loader;
     private IApiLoaderCallback callback;
 
-    private static StoryRepository instance;
+    private static StoryLoaderWrapper instance;
 
-    private StoryRepository(){
+    private StoryLoaderWrapper(){
 
     };
 
-    public static StoryRepository getInsatnce(){
+    public static StoryLoaderWrapper getInsatnce(){
         if (instance == null)
-            instance = new StoryRepository();
+            instance = new StoryLoaderWrapper();
 
         return instance;
     }

@@ -8,11 +8,13 @@ import com.halo.app.core.RestAdapterRequestInterceptor;
 import com.halo.app.core.RestErrorHandler;
 import com.halo.app.core.UserAgentProvider;
 import com.halo.app.core.api.GetAllStoriesApiCallExecuter;
+import com.halo.app.core.api.LikeStoryApiCallExecuter;
 import com.halo.app.core.api.StoriesBackgroundsApiCallExecuter;
 import com.halo.app.ui.HomePageActivity;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.halo.app.ui.LandingActivity;
+import com.halo.app.ui.StorySlidePageFragment;
 import com.halo.app.ui.view.ActionStripView;
 import com.squareup.otto.Bus;
 
@@ -36,7 +38,10 @@ import retrofit.converter.GsonConverter;
                 HomePageActivity.class,
                 LandingActivity.class,
                 StoriesBackgroundsApiCallExecuter.class,
-                ActionStripView.class
+                LikeStoryApiCallExecuter.class,
+                ActionStripView.class,
+                StorySlidePageFragment.class
+
         }
 )
 public class BootstrapModule {
