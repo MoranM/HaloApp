@@ -50,5 +50,7 @@
     <string name="share_msg">Get Inspired With Hila App</string>
     <string name="share_title">Inspire Others</string>
     <string name="default_shared_image_name">hila_share</string>
+    <string name="fb_app_package_name">com.facebook.katana</string>
+    <string name="twitter_app_package_name">com.twitter.android</string>
 
 </resources>

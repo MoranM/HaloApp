@@ -18,7 +18,9 @@ import com.halo.app.R;
 import com.halo.app.core.model.Story;
 import com.halo.app.ui.HomePageActivity;
 import com.halo.app.ui.events.LikeStoryEvent;
+import com.halo.app.ui.services.FbAppShareService;
 import com.halo.app.ui.services.ShareImageService;
+import com.halo.app.ui.services.TwitterppShareService;
 import com.halo.app.ui.services.WhatsAppShareService;
 import com.squareup.otto.Bus;
 
@@ -129,6 +131,20 @@ public class ActionStripView extends LinearLayout {
             public void onClick(View view) {
                 doAnimation();
                 notifyOnlikeSelected();
+            }
+        });
+
+        fbShare.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FbAppShareService.getInstance().share(context);
+            }
+        });
+
+        twitterShare.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                TwitterppShareService.getInstance().share(context);
             }
         });
     }

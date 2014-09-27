@@ -12,6 +12,7 @@ import com.halo.app.core.api.IApiResult;
 import com.halo.app.core.api.StoriesBackgroundsApiCallExecuter;
 import com.halo.app.core.apiResults.StoriesBackgrounds;
 import com.halo.app.core.model.StoryBackground;
+import com.halo.app.ui.services.GcmRegistrationService;
 import com.halo.app.util.IPreloadedCallback;
 import com.halo.app.util.ImagePreLoader;
 import com.halo.app.util.Ln;
@@ -41,7 +42,25 @@ public class LandingActivity extends BaseWithoutActionBarActivity implements Loa
 
         setContentView(R.layout.activity_landing);
 
-        initStoryBackgroundImageLoader();
+        final GcmRegistrationService gcmRegistrationService = iniGcmRegistrationService();
+
+        if (gcmRegistrationService.checkPlayServices()){
+            gcmRegistrationService.registerIfNeeded();
+            initStoryBackgroundImageLoader();
+        }
+    }
+
+    private GcmRegistrationService iniGcmRegistrationService() {
+        final GcmRegistrationService gcmRegistrationService = GcmRegistrationService.getInstance();
+        gcmRegistrationService.setContext(this);
+        return gcmRegistrationService;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        final GcmRegistrationService gcmRegistrationService = iniGcmRegistrationService();
+        gcmRegistrationService.checkPlayServices();
     }
 
     private void initStoryBackgroundImageLoader() {

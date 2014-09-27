@@ -7,7 +7,11 @@ import android.support.v13.app.FragmentPagerAdapter;
 import android.support.v13.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.View;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
+
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.halo.app.R;
 import com.halo.app.core.Constants;
 import com.halo.app.core.api.IApiLoaderCallback;
@@ -24,6 +28,7 @@ import com.halo.app.ui.view.ActionStripView;
 import com.halo.app.ui.view.ParallaxPagerTransformer;
 import com.halo.app.util.IPreloadedCallback;
 import com.halo.app.util.ImagePreLoader;
+import com.halo.app.util.Ln;
 import com.squareup.otto.Subscribe;
 import java.util.LinkedList;
 import java.util.List;
@@ -44,6 +49,9 @@ public class HomePageActivity extends BaseWithoutActionBarActivity implements IA
     @InjectView(R.id.back_to_start)
     protected ImageView backToStart;
 
+    @InjectView(R.id.refresh)
+    protected ImageView refreshBtn;
+
     @InjectView(R.id.action_strip)
     protected ActionStripView actionStrip;
 
@@ -59,6 +67,8 @@ public class HomePageActivity extends BaseWithoutActionBarActivity implements IA
     private int pageSize = 15;
     private boolean duringFetching = false;
     private boolean endOFStories = false;
+    private boolean onRefresh = false;
+
     private int currentPage = 0;
 
 
@@ -78,6 +88,28 @@ public class HomePageActivity extends BaseWithoutActionBarActivity implements IA
                 pager.setCurrentItem(0, true);
             }
         });
+
+        refreshBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                refreshBtn.startAnimation(AnimationUtils.loadAnimation(HomePageActivity.this, R.anim.rotate_anim));
+                refreshStories();
+            }
+        });
+    }
+
+    private void refreshStories() {
+        if (!isValidRefreshTime()){
+            cleaAnimations();
+            return;
+        }
+
+        storiesPage = 0;
+        endOFStories = false;
+        duringFetching = true;
+        onRefresh = true;
+        stories = new LinkedList<Story>();
+        getLoaderManager().restartLoader(API_LOADER, intiBundle(), storyLoaderWrapper);
     }
 
     private void initStories() {
@@ -157,6 +189,8 @@ public class HomePageActivity extends BaseWithoutActionBarActivity implements IA
     @Override
     public void onResultReceived(IApiResult result) {
 
+        cleaAnimations();
+
         if (result == null) {
             duringFetching = false;
             endOFStories = true;
@@ -189,6 +223,10 @@ public class HomePageActivity extends BaseWithoutActionBarActivity implements IA
         }
     }
 
+    private void cleaAnimations() {
+        refreshBtn.clearAnimation();
+    }
+
     private void attachStories(List<Story> newStories) {
         stories.addAll(newStories);
         initPager();
@@ -203,6 +241,11 @@ public class HomePageActivity extends BaseWithoutActionBarActivity implements IA
     private void initPager() {
         if (mPagerAdapter != null) {
             mPagerAdapter.notifyDataSetChanged();
+            if (onRefresh){
+                onRefresh = false;
+                pager.invalidate();
+                pager.setCurrentItem(0, true);
+            }
             return;
         }
 
@@ -236,13 +279,19 @@ public class HomePageActivity extends BaseWithoutActionBarActivity implements IA
     public void switchToShareMode() {
         actionsContainerView.setVisibility(View.GONE);
         backToStart.setVisibility(View.GONE);
+        refreshBtn.setVisibility(View.GONE);
         shareStrip.setVisibility(View.VISIBLE);
     }
 
     public void switchToRegularMode() {
         actionsContainerView.setVisibility(View.VISIBLE);
         backToStart.setVisibility(View.VISIBLE);
+        refreshBtn.setVisibility(View.VISIBLE);
         shareStrip.setVisibility(View.GONE);
+    }
+
+    public boolean isValidRefreshTime() {
+        return true;
     }
 
     private class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {

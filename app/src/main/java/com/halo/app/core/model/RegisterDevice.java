@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
-public class LikedStory implements Serializable {
+public class RegisterDevice implements Serializable {
 
     @SerializedName("success")
     private boolean success;
@@ -17,5 +17,3 @@ public class LikedStory implements Serializable {
         this.success = success;
     }
 }
-
-

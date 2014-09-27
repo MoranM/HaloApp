@@ -11,12 +11,21 @@
         android:background="@android:color/black" />
 
     <ImageView
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:layout_alignParentTop="true"
         android:layout_margin="20dp"
         android:id="@+id/back_to_start"
         android:src="@drawable/back_to_start_btn"/>
+
+    <ImageView
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_margin="20dp"
+        android:id="@+id/refresh"
+        android:src="@drawable/refresh"/>
 
     <com.halo.app.ui.view.ActionStripView
         android:layout_width="match_parent"

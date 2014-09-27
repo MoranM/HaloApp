@@ -32,6 +32,11 @@ public class SharedPreferencesStorage {
         editor.commit();
     }
 
+    public void save(String key, int value){
+        editor.putInt(key, value);
+        editor.commit();
+    }
+
     public String get(String key){
         return sharedPreferences.getString(key,"");
     }

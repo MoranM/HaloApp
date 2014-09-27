@@ -11,3 +11,5 @@ public class LikeStoryResult implements IApiResult {
         return result;
     }
 }
+
+
