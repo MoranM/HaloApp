@@ -7,6 +7,7 @@ import com.halo.app.core.RestErrorHandler;
 import com.halo.app.core.UserAgentProvider;
 import com.halo.app.core.api.GetAllStoriesApiCallExecuter;
 import com.halo.app.core.api.LikeStoryApiCallExecuter;
+import com.halo.app.core.api.RegisterGcmDeviceIdApiCallExecuter;
 import com.halo.app.core.api.StoriesBackgroundsApiCallExecuter;
 import com.halo.app.ui.HomePageActivity;
 import com.google.gson.Gson;
@@ -38,7 +39,8 @@ import retrofit.converter.GsonConverter;
                 StoriesBackgroundsApiCallExecuter.class,
                 LikeStoryApiCallExecuter.class,
                 ActionStripView.class,
-                StorySlidePageFragment.class
+                StorySlidePageFragment.class,
+                RegisterGcmDeviceIdApiCallExecuter.class
 
         }
 )

@@ -104,7 +104,7 @@ public class GcmRegistrationService {
 
                     sendRegistrationIdToBackend(regid);
                     storeRegistrationId(regid);
-                } catch (IOException ex) {
+                } catch (Exception ex) {
                     msg = "Error :" + ex.getMessage();
                 }
                 return msg;
